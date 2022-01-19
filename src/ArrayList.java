@@ -1,57 +1,37 @@
-import java.util.Arrays;
+public class ArrayList {
 
-public class ArrayList<E> {
-    private int size = 0;
-    private static final int DEFAULT_CAPACITY = 2;
-    private E[] elements = (E[]) new Object[DEFAULT_CAPACITY];
+    public static void main(String[] args) {
+        MyArrayList<String> list = new MyArrayList<>();
+        list.add("One");
+        list.add("Two");
+        list.add("Three");
+        list.add("Four");
+        list.add(0, "Zero");
+        list.add("Three");
+        printMyArrayList(list, "init array list");
 
-    public void remove(int index) {
-        if (index < 0)
-            index = 0;
-        if (index >= size)
-            index = size - 1;
-        for (int i = index; i < size - 1; i++) {
-            elements[i] = elements[i + 1];
+        list.replace("One", "Ten");
+        list.replaceAll("Three", "Thirteen");
+        printMyArrayList(list, "replace some elements");
+
+        list.remove(1);
+        list.removeAll("Thirteen");
+        printMyArrayList(list, "remove some elements");
+
+
+        list.clear();
+        printMyArrayList(list, "clear list");
+    }
+
+    public static void printMyArrayList(MyArrayList list, String msg) {
+        System.out.printf("---%s---\n", msg);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
         }
-        size--;
+        System.out.println("---------------------");
     }
 
-    public void remove() {
-        remove(size);
+    public static void printMyArrayList(MyArrayList list) {
+        printMyArrayList(list, "---------------");
     }
-
-    public void add(int index, E element) {
-        if (size >= elements.length) {
-            expand();
-        }
-        if (index < 0)
-            index = 0;
-        if (index > size)
-            index = size;
-        for (int i = size; i> index; i--){
-            elements[i] = elements[i-1];
-        }
-        elements[index] = element;
-        size++;
-    }
-
-    public void add(E element) {
-        add(size, element);
-    }
-
-    public E get(int i) {
-        if (i < 0 || i >= size) {
-            return null;
-        }
-        return elements[i];
-    }
-
-    private void expand() {
-        elements = Arrays.copyOf(elements, elements.length + DEFAULT_CAPACITY);
-    }
-
-    public int getSize() {
-        return size;
-    }
-
 }
